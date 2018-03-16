@@ -54,7 +54,7 @@ def classify(datapath,v):#datapath: directory name of the datasets, (v)erbose: T
 	X_wine = concat_data.drop(['quality_c','quality'], axis=1)
 	X_train, X_test, y_train, y_test = train_test_split(X_wine, y_wine, test_size=0.2, random_state=420)
 	#==========================================================================================
-	# Linear Regression Estimaro, OnevsRest classification
+	# Linear Regression Estimator, OnevsRest classification
 	clf = OneVsRestClassifier(estimator=linear_model.LinearRegression())
 	clf.fit(X_train, y_train)
 	# Make Predictions for both sets
