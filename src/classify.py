@@ -11,7 +11,7 @@ from src.utils.data_utils import *
 def print_metrics(classifier,X_in,Y_in,X_out,Y_out,preds_in,preds_out,verbose=False):
 	class_names = ["Worst","Worse","Average","Better","Best"]
 	if verbose:
-		print("Confusion Matrix(Training Sample):\n")
+		print("Confusion Matrix(Training set):\n")
 		cnf_matrix = metrics.confusion_matrix(Y_in, preds_in)
 		np.set_printoptions(precision=2)
 		# Plot non-normalized confusion matrix
@@ -24,10 +24,10 @@ def print_metrics(classifier,X_in,Y_in,X_out,Y_out,preds_in,preds_out,verbose=Fa
 
 		print('Mean squared error for training data:', metrics.mean_squared_error(Y_in, preds_in))	
 		print("Training set score(sklearn):",classifier.score(X_in,Y_in))
-		print("\nClassification Report(Training set):\n\n",metrics.classification_report(Y_in,preds_in))
+		print("{0}Classification Report(Training set):\n\n".format('-'*30 +'\n'),metrics.classification_report(Y_in,preds_in,target_names=class_names))
 		print("\n")
 	
-	print("Confusion Matrix(Testing Sample):\n")
+	print("Confusion Matrix(Test set):\n")
 	cnf_matrix = metrics.confusion_matrix(Y_out, preds_out)
 	np.set_printoptions(precision=2)
 	# Plot non-normalized confusion matrix
@@ -37,10 +37,10 @@ def print_metrics(classifier,X_in,Y_in,X_out,Y_out,preds_in,preds_out,verbose=Fa
 	plt.figure()
 	plot_confusion_matrix(cnf_matrix, classes=class_names, normalize=True,title='Normalized confusion matrix')
 	plt.show()
-	
+
 	print('Mean squared error for test data:', metrics.mean_squared_error(Y_out, preds_out))
 	print("Test set score(sklearn):",classifier.score(X_out,Y_out))#score meaning depends on classifier
-	print("Classification Report(Test Sample):\n",metrics.classification_report(Y_out,preds_out))
+	print("{0}Classification Report(Test set):\n\n".format('-'*30 +'\n'),metrics.classification_report(Y_out,preds_out,target_names=class_names))
 
 def classify(datapath,v):#datapath: directory name of the datasets, (v)erbose: True or false 
 	# Grab both wine datasets in one dataset
@@ -60,7 +60,7 @@ def classify(datapath,v):#datapath: directory name of the datasets, (v)erbose: T
 	# Make Predictions for both sets
 	pred_train = clf.predict(X_train)
 	pred_test = clf.predict(X_test)
-	print('='*30+"\nLinear Regression:\n")
+	print('='*100+"\nLinear Regression:\n")
 	print_metrics(clf,X_train,y_train,X_test,y_test,pred_train,pred_test,verbose=v)
 	#==========================================================================================
 	# Support Vector Estimator, OnevsRest classification
@@ -69,7 +69,7 @@ def classify(datapath,v):#datapath: directory name of the datasets, (v)erbose: T
 	# Make Predictions for both sets
 	pred_train = clf.predict(X_train)
 	pred_test = clf.predict(X_test)
-	print('='*30+"\nSVC :\n")
+	print('='*100+"\nSVC :\n")
 	print_metrics(clf,X_train,y_train,X_test,y_test,pred_train,pred_test,verbose=v)
 	#==========================================================================================
 
